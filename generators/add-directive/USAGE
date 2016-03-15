@@ -1,0 +1,5 @@
+Description:
+    Add a directive to the project
+
+Example:
+    yo angular-directives:add-directive image-picker

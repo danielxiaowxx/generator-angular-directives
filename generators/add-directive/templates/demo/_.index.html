@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="demoApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Test the directive</title>
+
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css">
+    <script type="text/javascript" src="../../bower_components/lodash/lodash.min.js"></script>
+    <script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
+    <script type="text/javascript" src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+    <link rel="stylesheet" href="../../lib/<%= directiveName %>/<%= directiveName %>.css">
+    <script type="text/javascript" src="../../lib/<%= directiveName %>/<%= directiveName %>.js"></script>
+</head>
+<body ng-controller="DemoController">
+
+<div gm-<%= directiveName %> ng-model="data">
+</div>
+
+<script type="text/javascript">
+    angular.module('demoApp', ['gm.<%= camelDirectiveName %>'])
+            .controller('DemoController', function($scope, $timeout) {
+                $scope.data = '<%= directiveName %> angular directive';
+
+                // test modal => ui
+                $timeout(function() {
+                    $scope.data = 'model change'
+                }, 2000);
+
+                // test ui => modal (click the directive and view the chrome console)
+                setInterval(function() {
+                    console.log($scope.data);
+                }, 3000)
+            });
+</script>
+
+</body>
+</html>
