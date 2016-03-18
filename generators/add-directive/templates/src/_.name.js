@@ -86,7 +86,7 @@
         controllerAs: 'gm<%= firstCapCamelDirectiveName %>',
         templateUrl: 'gm/template/<%= directiveName %>/<%= directiveName %>.html',
         scope       : {
-          gmCountriesSelectorLang: '@',
+          gm<%= firstCapCamelDirectiveName %>Lang: '@',
           getMockData: '&' // TODO: 修改成实际的方法
         },
         link: function(scope, element, attrs, ctrls) {
