@@ -3,6 +3,10 @@
 
   angular.module('gm.<%= camelDirectiveName %>', [])
 
+    .value('gm<%= firstCapCamelDirectiveName %>Value', { // 用于缓存组件多个实例共享的数据
+
+    })
+
     .constant('gm<%= firstCapCamelDirectiveName %>Config', {
       i18nData: {
         en   : {
