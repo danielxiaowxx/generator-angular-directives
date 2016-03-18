@@ -40,6 +40,8 @@
 
         $scope.i18nData = gm<%= firstCapCamelDirectiveName %>Config.i18nData[lang];
 
+        /*========== Scope Functions ==================================================*/
+
         /*========== Listeners ==================================================*/
 
         /*========== Watches ==================================================*/
@@ -70,6 +72,8 @@
         this.render = function() {
           element.append(ngModelCtrl.$viewValue); // TODO 根据实际修改
         };
+
+        /*========== Private Functions ==================================================*/
 
       }
     ])
