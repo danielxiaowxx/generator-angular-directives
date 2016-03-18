@@ -1,0 +1,15 @@
+<div class="<%= directiveName %>-modal">
+    <div class="modal-header">
+        <h3 class="modal-title">{{::i18nData.hello}}</h3>
+    </div>
+    <div class="modal-body">
+        <div gm-<%= directiveName %> ng-model="params.modelData"
+             gm-<%= directiveName %>-lang="{{params.lang}}"
+             get-mock-data="getMockData($param)">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-click="ok()">{{::i18nData.ok}}</button>
+        <button class="btn btn-warning" type="button" ng-click="cancel()">{{::i18nData.cancel}}</button>
+    </div>
+</div>

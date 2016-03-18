@@ -4,33 +4,59 @@
     <meta charset="UTF-8">
     <title>Test the directive</title>
 
+    <!--基本依赖的样式和JS-->
     <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="../../assets/css/inspinia.css">
+    <link rel="stylesheet" href="../../assets/css/font-awesome.css">
+    <script type="text/javascript" src="../../bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="../../bower_components/lodash/lodash.min.js"></script>
     <script type="text/javascript" src="../../bower_components/angular/angular.min.js"></script>
     <script type="text/javascript" src="../../bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
+    <!--组件自身依赖的样式和JS-->
     <link rel="stylesheet" href="../../lib/<%= directiveName %>/<%= directiveName %>.css">
     <script type="text/javascript" src="../../lib/<%= directiveName %>/<%= directiveName %>.js"></script>
 </head>
 <body ng-controller="DemoController">
 
-<div gm-<%= directiveName %> ng-model="data" gm-<%= directiveName %>-lang="zh_CN">
+<div style="width: 800px">
+    <div gm-<%= directiveName %> ng-model="modelData"
+         gm-<%= directiveName %>-lang="zh_CN"
+         get-mock-data="demoService.getMockData($param)">
+    </div>
 </div>
 
+<!--modal directive start-->
+<button type="button" class="btn btn-primary"
+        gm-<%= directiveName %>-modal ng-model="modelData"
+        gm-<%= directiveName %>-modal-lang="zh_CN"
+        get-mock-data="demoService.getMockData($param)">
+    点击组件
+</button>
+<!--modal directive end-->
+
 <script type="text/javascript">
-    angular.module('demoApp', ['gm.<%= camelDirectiveName %>'])
-            .controller('DemoController', function($scope, $timeout) {
-                $scope.data = '<%= directiveName %> angular directive';
+    angular.module('demoApp', ['ui.bootstrap', 'gm.<%= camelDirectiveName %>'])
+            .factory('demoService', function($q) {
+                return {
+                    getMockData: function(param) {
+                        console.log('组件传给callback方法的参数:', param);
+                        return $q(function(resolve) {
+                            setTimeout(function() {
+                                var res = {
+                                    userId: 1,
+                                    userName: 'Daniel'
+                                };
+                                resolve(res);
+                            }, 1000);
+                        });
+                    }
+                }
+            })
+            .controller('DemoController', function($scope, demoService) {
+                $scope.modelData = '<%= directiveName %> angular directive';
 
-                // test modal => ui
-                $timeout(function() {
-                    $scope.data = 'model change'
-                }, 2000);
-
-                // test ui => modal (click the directive and view the chrome console)
-                setInterval(function() {
-                    console.log($scope.data);
-                }, 3000)
+                $scope.demoService = demoService;
             });
 </script>
 

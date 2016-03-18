@@ -1,3 +1,11 @@
-.<%= directiveName %> {
+@import (reference) "@{bootstrapPath}/less/variables";
+@import (reference) "@{inspiniaVariables}";
 
+.<%= directiveName %> {
+  color: @brand-primary;
 }
+
+// -- modal directive start //
+.<%= directiveName %>-modal {
+}
+// modal directive end -- //

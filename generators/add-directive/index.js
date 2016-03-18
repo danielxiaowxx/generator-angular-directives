@@ -30,6 +30,34 @@ module.exports = yeoman.generators.Base.extend({
     scrFolderPath = './' + scrFolder + '/';
     demoFolder = 'demo/' + this.directiveName;
     demoFolderPath = './' + demoFolder + '/';
+
+    this.on('end', function() {
+      if (this.needModal == 'No') {
+        common.removeFiles(this, [
+          '*modal.html'
+        ], scrFolder);
+      }
+    })
+  },
+
+  promptForModalType: function() {
+    var done = this.async();
+
+    var prompts = [{
+      type    : 'list',
+      name    : 'needModal',
+      message : 'Need modal effect?',
+      choices : ['Yes', 'No'],
+      default : 'No',
+      required: true
+    }];
+
+    this.prompt(prompts, function(props) {
+
+      this.needModal = props.needModal;
+
+      done();
+    }.bind(this));
   },
 
   copyDirective: function() {
@@ -48,15 +76,36 @@ module.exports = yeoman.generators.Base.extend({
 
     glob('{' + scrFolderPath + ',' + demoFolderPath + '}' + "*.*", {}, function(er, files) {
       _.each(files, function(filePath) {
+
         var toFilePath = filePath.replace('_.name', self.directiveName);
+        toFilePath = toFilePath.replace('_.modal', self.directiveName + '-modal');
         toFilePath = toFilePath.replace('_.', '');
-        self.fs.copyTpl(
+        self.fs.copy(
           filePath,
           toFilePath,
           {
-            directiveName             : self.directiveName,
-            camelDirectiveName        : self.camelDirectiveName,
-            firstCapCamelDirectiveName: self.firstCapCamelDirectiveName
+            process: function(contents) {
+
+              contents = contents.toString();
+
+              if (self.needModal == 'Yes') {
+                contents = contents.replace(/\/\/ -- modal directive start \/\//g, '');
+                contents = contents.replace(/\/\/ modal directive end -- \/\//g, '');
+
+                contents = contents.replace(/<!--modal directive start-->/g, '');
+                contents = contents.replace(/<!--modal directive end-->/g, '');
+              } else {
+                contents = contents.replace(/\/\/ -- modal directive start[\s\S]*?modal directive end -- \/\//g, '');
+
+                contents = contents.replace(/<!--modal directive start-->[\s\S]*?<!--modal directive end-->/g, '');
+              }
+
+              return _.template(contents, {})({
+                directiveName             : self.directiveName,
+                camelDirectiveName        : self.camelDirectiveName,
+                firstCapCamelDirectiveName: self.firstCapCamelDirectiveName
+              });
+            }
           });
       });
 
@@ -71,7 +120,7 @@ module.exports = yeoman.generators.Base.extend({
 
     common.removeFiles(this, [
       '*.*'
-    ], demoFolder)
+    ], demoFolder);
   },
 
   usageTip: function() {
