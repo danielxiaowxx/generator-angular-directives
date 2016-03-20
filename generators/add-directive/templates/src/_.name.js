@@ -26,9 +26,9 @@
       }
     })
 
-    .controller('gm<%= firstCapCamelDirectiveName %>Controller', ['gm<%= firstCapCamelDirectiveName %>Config', '$scope',
+    .controller('gm<%= firstCapCamelDirectiveName %>Controller', ['gm<%= firstCapCamelDirectiveName %>Config', 'gm<%= firstCapCamelDirectiveName %>Value', '$scope',
 
-      function(gm<%= firstCapCamelDirectiveName %>Config, $scope) {
+      function(gm<%= firstCapCamelDirectiveName %>Config, gm<%= firstCapCamelDirectiveName %>Value, $scope) {
 
         var element, restService;
 
