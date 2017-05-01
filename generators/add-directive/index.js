@@ -7,6 +7,7 @@ var Promise = require('bluebird');
 var common = require('../app/common');
 var logger = require('../app/logger');
 var util = require('../app/util');
+var fs = Promise.promisifyAll(require('fs-extra'));
 
 var scrFolderPath, scrFolder, demoFolderPath, demoFolder;
 
@@ -63,8 +64,8 @@ module.exports = yeoman.generators.Base.extend({
   copyDirective: function() {
     var done = this.async();
     Promise.all([
-      common.exec('cp -rf ' + this.templatePath('./src') + ' ' + this.destinationPath(scrFolderPath)),
-      common.exec('cp -rf ' + this.templatePath('./demo') + ' ' + this.destinationPath(demoFolderPath))
+      fs.copyAsync(this.templatePath('./src'), this.destinationPath(scrFolderPath)),
+      fs.copyAsync(this.templatePath('./demo'), this.destinationPath(demoFolderPath)),
     ]).then(function() {
       done();
     })

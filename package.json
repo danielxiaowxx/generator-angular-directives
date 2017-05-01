@@ -5,7 +5,6 @@
   "homepage": "",
   "author": {
     "name": "daniel.xiao",
-    "email": "daniel.xiao@corp.globalmarket.com",
     "url": ""
   },
   "files": [
@@ -18,6 +17,7 @@
   "dependencies": {
     "bluebird": "^2.10.1",
     "chalk": "^1.0.0",
+    "fs-extra": "^3.0.0",
     "glob": "^5.0.15",
     "lodash": "^3.10.1",
     "underscore.string": "^3.2.2",

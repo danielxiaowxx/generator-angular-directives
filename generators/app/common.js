@@ -5,6 +5,8 @@
 var child_process = require('child_process');
 var Promise = require('bluebird');
 var logger = require('./logger');
+var fs = Promise.promisifyAll(require('fs-extra'));
+var glob = Promise.promisify(require('glob'));
 
 module.exports = {
   removeFiles: removeFiles,
@@ -19,7 +21,9 @@ function removeFiles(context, rmFiles, folder) {
   var remove = [];
 
   for (var i = 0; i < files.length; i++) {
-    remove.push(exec('rm ./' + folder + '/' + files[i]));
+    remove.push(glob('./' + folder + '/' + files[i]).then(files => {
+      return Promise.all(files.map(file => fs.removeAsync(file)));
+    }));
   };
 
   Promise.all(remove)

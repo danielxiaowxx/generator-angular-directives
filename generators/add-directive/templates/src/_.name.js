@@ -1,13 +1,13 @@
 
 (function(_) {
 
-  angular.module('gm.<%= camelDirectiveName %>', [])
+  angular.module('dn.<%= camelDirectiveName %>', [])
 
-    .value('gm<%= firstCapCamelDirectiveName %>Value', { // 用于缓存组件多个实例共享的数据
+    .value('dn<%= firstCapCamelDirectiveName %>Value', { // 用于缓存组件多个实例共享的数据
 
     })
 
-    .constant('gm<%= firstCapCamelDirectiveName %>Config', {
+    .constant('dn<%= firstCapCamelDirectiveName %>Config', {
       i18nData: {
         en   : {
           hello : 'Hello',
@@ -26,19 +26,19 @@
       }
     })
 
-    .controller('gm<%= firstCapCamelDirectiveName %>Controller', ['gm<%= firstCapCamelDirectiveName %>Config', 'gm<%= firstCapCamelDirectiveName %>Value', '$scope',
+    .controller('dn<%= firstCapCamelDirectiveName %>Controller', ['dn<%= firstCapCamelDirectiveName %>Config', 'dn<%= firstCapCamelDirectiveName %>Value', '$scope',
 
-      function(gm<%= firstCapCamelDirectiveName %>Config, gm<%= firstCapCamelDirectiveName %>Value, $scope) {
+      function(dn<%= firstCapCamelDirectiveName %>Config, dn<%= firstCapCamelDirectiveName %>Value, $scope) {
 
         var element, restService;
 
-        var lang = $scope.gm<%= firstCapCamelDirectiveName %>Lang || 'en';
+        var lang = $scope.dn<%= firstCapCamelDirectiveName %>Lang || 'en';
 
         var ngModelCtrl = {$setViewValue: angular.noop};
 
         /*========== Scope Models ==================================================*/
 
-        $scope.i18nData = gm<%= firstCapCamelDirectiveName %>Config.i18nData[lang];
+        $scope.i18nData = dn<%= firstCapCamelDirectiveName %>Config.i18nData[lang];
 
         /*========== Scope Functions ==================================================*/
 
@@ -78,41 +78,41 @@
       }
     ])
 
-    .directive('gm<%= firstCapCamelDirectiveName %>', [function() {
+    .directive('dn<%= firstCapCamelDirectiveName %>', [function() {
       return {
         restrict: 'AE',
-        require: ['gm<%= firstCapCamelDirectiveName %>', 'ngModel'],
-        controller: 'gm<%= firstCapCamelDirectiveName %>Controller',
-        controllerAs: 'gm<%= firstCapCamelDirectiveName %>',
-        templateUrl: 'gm/template/<%= directiveName %>/<%= directiveName %>.html',
+        require: ['dn<%= firstCapCamelDirectiveName %>', 'ngModel'],
+        controller: 'dn<%= firstCapCamelDirectiveName %>Controller',
+        controllerAs: 'dn<%= firstCapCamelDirectiveName %>',
+        templateUrl: 'dn/template/<%= directiveName %>/<%= directiveName %>.html',
         scope       : {
-          gm<%= firstCapCamelDirectiveName %>Lang: '@',
+          dn<%= firstCapCamelDirectiveName %>Lang: '@',
           getMockData: '&' // TODO: 修改成实际的方法
         },
         link: function(scope, element, attrs, ctrls) {
 
-          var gm<%= firstCapCamelDirectiveName %>Ctrl = ctrls[0], ngModelCtrl = ctrls[1];
+          var dn<%= firstCapCamelDirectiveName %>Ctrl = ctrls[0], ngModelCtrl = ctrls[1];
 
           var restService = {
             getMockData: scope.getMockData // TODO: 修改成实际的方法
           };
 
-          gm<%= firstCapCamelDirectiveName %>Ctrl.init(element, restService, ngModelCtrl);
+          dn<%= firstCapCamelDirectiveName %>Ctrl.init(element, restService, ngModelCtrl);
 
         }
       }
     }])
 
     // -- modal directive start //
-    .controller('gm<%= firstCapCamelDirectiveName %>ModalController', ['$scope', '$modalInstance', 'gm<%= firstCapCamelDirectiveName %>Config', 'params',
+    .controller('dn<%= firstCapCamelDirectiveName %>ModalController', ['$scope', '$modalInstance', 'dn<%= firstCapCamelDirectiveName %>Config', 'params',
 
-      function($scope, $modalInstance, gm<%= firstCapCamelDirectiveName %>Config, params) {
+      function($scope, $modalInstance, dn<%= firstCapCamelDirectiveName %>Config, params) {
 
         /*========== Scope Models ==================================================*/
 
         $scope.params = params;
 
-        $scope.i18nData = gm<%= firstCapCamelDirectiveName %>Config.i18nData[params.lang];
+        $scope.i18nData = dn<%= firstCapCamelDirectiveName %>Config.i18nData[params.lang];
 
         /*========== Scope Functions ==================================================*/
 
@@ -131,7 +131,7 @@
 
     }])
 
-    .directive('gm<%= firstCapCamelDirectiveName %>Modal', ['$modal', function($modal) {
+    .directive('dn<%= firstCapCamelDirectiveName %>Modal', ['$modal', function($modal) {
       return {
         restrict: 'A',
         require : 'ngModel',
@@ -142,15 +142,15 @@
 
           element.on('click', function() {
             var modalInstance = $modal.open({
-              templateUrl: 'gm/template/<%= directiveName %>/<%= directiveName %>-modal.html',
-              controller : 'gm<%= firstCapCamelDirectiveName %>ModalController',
+              templateUrl: 'dn/template/<%= directiveName %>/<%= directiveName %>-modal.html',
+              controller : 'dn<%= firstCapCamelDirectiveName %>ModalController',
               size       : 'lg',
               resolve    : {
                 params: function() {
                   return {
                     modelData   : ngModelCtrl.$viewValue,
                     getMockData : scope.getMockData, // TODO: 修改成实际的方法
-                    lang        : attrs.gm<%= firstCapCamelDirectiveName %>ModalLang
+                    lang        : attrs.dn<%= firstCapCamelDirectiveName %>ModalLang
                   }
                 }
               }
